@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  app:
+    # Build the Docker image from the Dockerfile in the current directory
+    build: .
+    # Name the container for easier management
+    container_name: faucet-maintenance-app
+    # Restart the container automatically unless it is manually stopped
+    restart: unless-stopped
+    # Map port 8501 on the host to port 8501 in the container
+    ports:
+      - "8501:8501"
+    # Set environment variables inside the container.
+    # These override any values in the .env file copied into the image.
+    environment:
+      # Point to the Google credentials file mounted via volumes
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/keys/service-account.json
+      # Point the database path to the persistent data volume
+      - DB_PATH=/app/data/prototype.db
+    # Mount host directories into the container to persist data
+    volumes:
+      # Mount the './data' directory on the host to '/app/data' in the container.
+      # This ensures your SQLite database is saved on your machine, not lost when the container stops.
+      - ./data:/app/data
+      # Mount your Google Cloud service account key from './keys' on the host
+      # to '/app/keys' in the container in read-only mode.
+      - ./keys:/app/keys:ro

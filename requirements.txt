@@ -1,0 +1,7 @@
+streamlit==1.36.0
+pandas==2.2.2
+Pillow==10.3.0
+python-dotenv==1.0.1
+streamlit_js_eval==0.1.7
+google-cloud-vision==3.7.4
+requests==2.32.3
